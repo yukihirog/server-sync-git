@@ -6,7 +6,7 @@ $TARGET_PATH = '/var/www/html/';
 
 // GIT_SSHで鍵指定する場合はここで設定してshファイル内に鍵ファイルの場所を記述する
 // 別の方法で鍵指定できている場合は''にする
-$GIT_SSH = '';
+$GIT_SSH = 'GIT_SSH=' . dirname(__FILE__) . '/git-ssh.sh';
 
 $BACKLOG_USER = $_GET['space'];
 $BACKLOG_SPACE = $_GET['space'];
@@ -97,7 +97,7 @@ if (isset($input) && $input) {
 				echo "check branch directory: exists\n";
 
 				// ブランチディレクトリがある場合はpull
-				$cmd = 'cd ' . $branch_dir . '; git pull';
+				$cmd = 'cd ' . $branch_dir . '; ' . $GIT_SSH . ' git pull';
 				exec($cmd, $output);
 				var_dump($output);
 				echo "Pulled.\n";
